@@ -16,7 +16,7 @@ public class ImageUploadService {
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dr9z2qewx",
             "api_key", "728125366569481",
-            "api_secret", "4WO-x8b7FYUc4b9eaEsSiS1JZ_c"
+            "api_secret", ""
         ));
     }
 
