@@ -31,4 +31,4 @@ Ce service gère les listings de surplus alimentaires pour la plateforme FoodSur
 
 ## Auteur
 
-- [Ton nom ou pseudo]
+- Faduul
