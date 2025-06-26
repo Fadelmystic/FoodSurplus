@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: dev-mem
+    ports:
+      - "8180:8080"  # External port 8180 → Internal Keycloak port 8080
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27018:27017"  # External port 27018 → Internal MongoDB port 27017
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

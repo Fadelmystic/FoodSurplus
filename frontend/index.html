@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surplus - Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="main-auth-layout">
+        <!-- Colonne gauche : Formulaire -->
+        <div class="auth-left">
+            <div class="logo-title">
+                <span class="brand-surplus" style="font-size:2rem; font-family:Georgia,serif; color:#2ec4b6;">Surplus</span>
+                <h2 class="main-title">Create An Account !</h2>
+            </div>
+            <div class="auth-container">
+                <div class="tab-navigation">
+                    <button class="tab-btn active" onclick="showTab('login')">Connexion</button>
+                    <button class="tab-btn" onclick="showTab('register')">Inscription</button>
+                </div>
+                <div id="login" class="tab-content active">
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <input type="text" id="loginUsername" name="username" placeholder="Nom d'utilisateur" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" name="password" placeholder="Mot de passe" required>
+                        </div>
+                        <div class="form-group form-remember">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <label for="rememberMe">Remember Me</label>
+                        </div>
+                        <button type="submit" class="btn-primary">Se connecter</button>
+                    </form>
+                </div>
+                <div id="register" class="tab-content">
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="firstname" name="firstname" placeholder="Prénom" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastname" name="lastname" placeholder="Nom" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" placeholder="Date de naissance" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="city" name="city" placeholder="Ville" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="role" name="role" required>
+                                <option value="">Sélectionnez un rôle</option>
+                                <option value="SELLER">Vendeur</option>
+                                <option value="BUYER">Acheteur</option>
+                                <option value="NGO">ONG</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">S'inscrire</button>
+                    </form>
+                </div>
+                <div class="already-account">Already have an account ? <a href="#" onclick="showTab('login')">login</a></div>
+            </div>
+        </div>
+        <!-- Colonne droite : Image du chef centrée -->
+        <div class="auth-right">
+            <div class="about-us-link">About us</div>
+            <div class="brand-title"><span class="brand-surplus">Surplus</span> <span class="brand-food">Food</span></div>
+            <div class="chef-center-container">
+                <img src="assets/img/image.png" alt="Chef" class="chef-img">
+            </div>
+        </div>
+    </div>
+    <div id="notification" class="notification hidden"></div>
+    <script src="assets/js/script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Acheteur/ONG - Surplus</title>
+    <link rel="stylesheet" href="../assets/css/buyer-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Surplus - Marketplace</h1>
+                <div class="user-info">
+                    <span id="userName">Chargement...</span>
+                    <button id="logoutBtn" class="btn-logout">Déconnexion</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <button class="nav-btn active" onclick="showSection('marketplace')">Marketplace</button>
+            <button class="nav-btn" onclick="showSection('orders')">Mes Commandes</button>
+            <button class="nav-btn" onclick="showSection('profile')">Mon Profil</button>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main class="dashboard-main">
+            <!-- Section Marketplace -->
+            <section id="marketplace" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Marketplace</h2>
+                    <div class="filters">
+                        <select id="categoryFilter" onchange="filterListings()">
+                            <option value="FRUIT">Fruits</option>
+                            <option value="LEGUME">Légumes</option>
+                            <option value="BOISSON">Boissons</option>
+                            <option value="VIANDE">Viandes</option>
+                            <option value="POISSON">Poissons</option>
+                            <option value="PRODUIT_LAITIER">Produits laitiers</option>
+                            <option value="BOULANGERIE">Boulangerie</option>
+                            <option value="AUTRE">Autre</option>
+                        </select>
+                        <select id="sortFilter" onchange="filterListings()">
+                            <option value="date">Plus récents</option>
+                            <option value="price-asc">Prix croissant</option>
+                            <option value="price-desc">Prix décroissant</option>
+                            <option value="expiry">Expiration proche</option>
+                        </select>
+                        <input type="text" id="searchFilter" placeholder="Rechercher..." onkeyup="filterListings()">
+                    </div>
+                </div>
+                
+                <div class="listings-grid" id="listingsGrid">
+                    <!-- Les listings seront chargés ici dynamiquement -->
+                </div>
+            </section>
+
+            <!-- Section Mes Commandes -->
+            <section id="orders" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Mes Commandes</h2>
+                </div>
+                
+                <div class="orders-container" id="ordersContainer">
+                    <!-- Les commandes seront chargées ici dynamiquement -->
+                </div>
+            </section>
+
+            <!-- Section Profil -->
+            <section id="profile" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Mon Profil</h2>
+                    <button class="btn-secondary" onclick="editProfile()">Modifier</button>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-info" id="profileInfo">
+                        <!-- Les informations du profil seront chargées ici -->
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form hidden">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editFirstname">Prénom</label>
+                                <input type="text" id="editFirstname" name="firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editLastname">Nom</label>
+                                <input type="text" id="editLastname" name="lastname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="email" id="editEmail" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editCity">Ville</label>
+                            <input type="text" id="editCity" name="city" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="cancelEditProfile()">Annuler</button>
+                            <button type="submit" class="btn-primary">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de commande -->
+    <div id="orderModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Passer une commande</h3>
+                <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderDetails">
+                    <!-- Détails de la commande -->
+                </div>
+                <form id="orderForm" class="order-form">
+                    <div class="form-group">
+                        <label for="orderQuantity">Quantité souhaitée</label>
+                        <input type="number" id="orderQuantity" name="quantity" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderAddress">Adresse de livraison</label>
+                        <textarea id="orderAddress" name="address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderNotes">Notes (optionnel)</label>
+                        <textarea id="orderNotes" name="notes" rows="2"></textarea>
+                    </div>
+                    <div class="order-summary">
+                        <h4>Résumé de la commande</h4>
+                        <div id="orderSummary">
+                            <!-- Résumé de la commande -->
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeOrderModal()">Annuler</button>
+                        <button type="submit" class="btn-primary">Confirmer la commande</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden"></div>
+
+    <script src="../assets/js/buyer-script.js"></script>
+</body>
+</html> 

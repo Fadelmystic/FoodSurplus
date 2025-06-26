@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodSurplus - Listings</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a2342 0%, #193660 100%);
+            min-height: 100vh;
+            color: #eaf6fb;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+        .header {
+            background: transparent;
+            color: #eaf6fb;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 8px #000a;
+        }
+        .category-filter {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .category-filter select {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            background: #193660;
+            color: #eaf6fb;
+            box-shadow: 0 2px 8px #0003;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .category-filter select:focus {
+            border: 2px solid #3a7ca5;
+        }
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .listing-card {
+            background: #142850;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #0005;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+        }
+        .listing-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 32px #0007;
+        }
+        .listing-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 18px;
+            border-top-right-radius: 18px;
+        }
+        .listing-info {
+            padding: 18px 20px 12px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .listing-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #3a7ca5;
+            letter-spacing: 1px;
+        }
+        .listing-description {
+            color: #b5c7d3;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+        .listing-stock {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #21e6c1;
+        }
+        .listing-stock.unavailable {
+            color: #ff4c60;
+        }
+        .listing-category {
+            font-size: 0.95em;
+            color: #eaf6fb;
+            background: #193660;
+            border-radius: 6px;
+            padding: 4px 10px;
+            display: inline-block;
+            margin-bottom: 6px;
+            margin-top: 4px;
+            letter-spacing: 1px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.3em;
+            color: #b5c7d3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FoodSurplus - Surplus Alimentaires</h1>
+        </div>
+        <div class="category-filter">
+            <select id="categorySelect">
+                <option value="">Toutes les catégories</option>
+                <option value="FRUIT">Fruits</option>
+                <option value="LEGUME">Légumes</option>
+                <option value="BOISSON">Boissons</option>
+                <option value="VIANDE">Viandes</option>
+                <option value="POISSON">Poisson</option>
+                <option value="PRODUIT_LAITIER">Produits laitiers</option>
+                <option value="BOULANGERIE">Boulangerie</option>
+                <option value="AUTRE">Autres</option>
+            </select>
+        </div>
+        <div id="listings" class="listings-grid">
+            <div class="loading">Chargement des listings...</div>
+        </div>
+    </div>
+
+    <script>
+        let allListings = [];
+
+        async function loadListings() {
+            try {
+                const response = await fetch('/api/listings');
+                allListings = await response.json();
+                filterListings();
+            } catch (error) {
+                console.error('Erreur lors du chargement des listings:', error);
+                document.getElementById('listings').innerHTML = 
+                    '<div class="loading">Erreur lors du chargement des listings</div>';
+            }
+        }
+
+        function filterListings() {
+            const selectedCategory = document.getElementById('categorySelect').value;
+            const filteredListings = selectedCategory 
+                ? allListings.filter(listing => listing.category === selectedCategory)
+                : allListings;
+
+            const listingsContainer = document.getElementById('listings');
+            listingsContainer.innerHTML = '';
+
+            if (filteredListings.length === 0) {
+                listingsContainer.innerHTML = '<div class="loading">Aucun listing trouvé pour cette catégorie</div>';
+                return;
+            }
+
+            filteredListings.forEach(listing => {
+                const card = document.createElement('div');
+                card.className = 'listing-card';
+                card.innerHTML = `
+                    <img src="${listing.informations.imageUrl}" alt="${listing.informations.nom}">
+                    <div class="listing-info">
+                        <div class="listing-category">${listing.category ?? ''}</div>
+                        <div class="listing-title">${listing.informations.nom}</div>
+                        <div class="listing-description">${listing.informations.description}</div>
+                        <div class="listing-stock ${!listing.stock.disponible ? 'unavailable' : ''}">
+                            ${listing.stock.disponible ? 
+                                `Disponible: ${listing.stock.quantite} unités` : 
+                                'Non disponible'}
+                        </div>
+                    </div>
+                `;
+                listingsContainer.appendChild(card);
+            });
+        }
+
+        // Charger les listings au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadListings();
+            // Ajouter l'écouteur d'événement pour le changement de catégorie
+            document.getElementById('categorySelect').addEventListener('change', filterListings);
+        });
+    </script>
+</body>
+</html> 

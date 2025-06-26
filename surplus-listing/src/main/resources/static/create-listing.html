@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un Listing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form { max-width: 400px; margin: auto; }
+        label { display: block; margin-top: 10px; }
+        input, textarea, select { width: 100%; padding: 8px; margin-top: 4px; }
+        button { margin-top: 15px; padding: 10px 20px; }
+        .message { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Créer un Listing</h2>
+    <form id="listingForm" enctype="multipart/form-data">
+        <label>Nom :
+            <input type="text" name="nom" required>
+        </label>
+        <label>Description :
+            <textarea name="description" required></textarea>
+        </label>
+        <label>Quantité :
+            <input type="number" name="quantite" min="1" value="1" required>
+        </label>
+        <label>Catégorie :
+            <select name="category" required>
+                <option value="FRUIT">Fruit</option>
+                <option value="LEGUME">Légume</option>
+                <option value="BOISSON">Boisson</option>
+                <option value="VIANDE">Viande</option>
+                <option value="POISSON">Poisson</option>
+                <option value="PRODUIT_LAITIER">Produit laitier</option>
+                <option value="BOULANGERIE">Boulangerie</option>
+                <option value="AUTRE">Autre</option>
+            </select>
+        </label>
+        <label>Unité :
+            <select name="unit" required>
+                <option value="kg">kg</option>
+                <option value="g">g</option>
+                <option value="piece">pièce</option>
+                <option value="litre">litre</option>
+            </select>
+        </label>
+        <label>Image :
+            <input type="file" name="image" accept="image/*" required>
+        </label>
+        <label>Supplier ID :
+            <input type="text" name="supplierId" required>
+        </label>
+        <button type="submit">Créer</button>
+    </form>
+    <div class="message" id="message"></div>
+
+    <script>
+        document.getElementById('listingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData();
+
+            // Création d'un objet pour les données (hors image)
+            const data = {
+                nom: form.nom.value,
+                description: form.description.value,
+                quantite: parseInt(form.quantite.value, 10),
+                category: form.category.value,
+                unit: form.unit.value,
+                supplierId: form.supplierId.value
+            };
+
+            formData.append('data', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+            formData.append('image', form.image.files[0]);
+
+            try {
+                const response = await fetch('http://localhost:8080/api/listings', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    document.getElementById('message').textContent = "Listing créé avec succès !";
+                    form.reset();
+                } else {
+                    document.getElementById('message').textContent = "Erreur lors de la création du listing.";
+                }
+            } catch (err) {
+                document.getElementById('message').textContent = "Erreur réseau ou serveur.";
+            }
+        });
+    </script>
+</body>
+</html>

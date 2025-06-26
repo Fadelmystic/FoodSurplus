@@ -1,0 +1,7 @@
+spring:
+  webflux:
+    base-path: /api
+  security:
+    user:
+      name: admin
+      password: adminpass

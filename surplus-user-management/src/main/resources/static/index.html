@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surplus - Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Surplus</h1>
+            <p>Plateforme de gestion des utilisateurs</p>
+        </header>
+
+        <div class="auth-container">
+            <!-- Navigation des onglets -->
+            <div class="tab-navigation">
+                <button class="tab-btn active" onclick="showTab('login')">Connexion</button>
+                <button class="tab-btn" onclick="showTab('register')">Inscription</button>
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <div id="login" class="tab-content active">
+                <form id="loginForm" class="auth-form">
+                    <h2>Connexion</h2>
+                    <div class="form-group">
+                        <label for="loginUsername">Nom d'utilisateur</label>
+                        <input type="text" id="loginUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Se connecter</button>
+                </form>
+            </div>
+
+            <!-- Formulaire d'inscription -->
+            <div id="register" class="tab-content">
+                <form id="registerForm" class="auth-form">
+                    <h2>Inscription</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">Prénom</label>
+                            <input type="text" id="firstname" name="firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Nom</label>
+                            <input type="text" id="lastname" name="lastname" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date de naissance</label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Ville</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Rôle</label>
+                        <select id="role" name="role" required>
+                            <option value="">Sélectionnez un rôle</option>
+                            <option value="SELLER">Vendeur</option>
+                            <option value="BUYER">Acheteur</option>
+                            <option value="NGO">ONG</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Messages de notification -->
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

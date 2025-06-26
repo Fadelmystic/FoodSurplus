@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Vendeur - Surplus</title>
+    <link rel="stylesheet" href="../assets/css/seller-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Surplus - Dashboard Vendeur</h1>
+                <div class="user-info">
+                    <span id="userName">Chargement...</span>
+                    <button id="logoutBtn" class="btn-logout">Déconnexion</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <button class="nav-btn active" onclick="showSection('listings')">Mes Listings</button>
+            <button class="nav-btn" onclick="showSection('add-listing')">Ajouter un Listing</button>
+            <button class="nav-btn" onclick="showSection('profile')">Mon Profil</button>
+        </nav>
+
+        <!-- Contenu principal -->
+        <main class="dashboard-main">
+            <!-- Section Mes Listings -->
+            <section id="listings" class="dashboard-section active">
+                <div class="section-header">
+                    <h2>Mes Listings</h2>
+                    <button class="btn-primary" onclick="showSection('add-listing')">+ Nouveau Listing</button>
+                </div>
+                
+                <div class="listings-grid" id="listingsGrid">
+                    <!-- Les listings seront chargés ici dynamiquement -->
+                </div>
+            </section>
+
+            <!-- Section Ajouter un Listing -->
+            <section id="add-listing" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Ajouter un Nouveau Listing</h2>
+                </div>
+                
+                <form id="addListingForm" class="listing-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="title">Titre du produit</label>
+                            <input type="text" id="title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Catégorie</label>
+                            <select id="category" name="category" required>
+                                <option value="">Sélectionnez une catégorie</option>
+                                <option value="FOOD">Nourriture</option>
+                                <option value="CLOTHING">Vêtements</option>
+                                <option value="ELECTRONICS">Électronique</option>
+                                <option value="BOOKS">Livres</option>
+                                <option value="OTHER">Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quantity">Quantité disponible</label>
+                            <input type="number" id="quantity" name="quantity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Prix (€)</label>
+                            <input type="number" id="price" name="price" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expiryDate">Date d'expiration</label>
+                        <input type="date" id="expiryDate" name="expiryDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Localisation</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="showSection('listings')">Annuler</button>
+                        <button type="submit" class="btn-primary">Créer le Listing</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Section Profil -->
+            <section id="profile" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Mon Profil</h2>
+                    <button class="btn-secondary" onclick="editProfile()">Modifier</button>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-info" id="profileInfo">
+                        <!-- Les informations du profil seront chargées ici -->
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form hidden">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editFirstname">Prénom</label>
+                                <input type="text" id="editFirstname" name="firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editLastname">Nom</label>
+                                <input type="text" id="editLastname" name="lastname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="email" id="editEmail" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editCity">Ville</label>
+                            <input type="text" id="editCity" name="city" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="cancelEditProfile()">Annuler</button>
+                            <button type="submit" class="btn-primary">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden"></div>
+
+    <script src="../assets/js/seller-script.js"></script>
+</body>
+</html> 
